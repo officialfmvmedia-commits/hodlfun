@@ -62,3 +62,5 @@ input[type=file]{color:var(--mid)}input[type=file]::file-selector-button{backgro
 .sb{background:linear-gradient(90deg,#7fc1ff,#bfe0ff);display:flex;align-items:center;justify-content:center;color:#06204a}
 .slg{display:flex;gap:28px;flex-wrap:wrap;margin-top:14px;font-size:13px;color:var(--mid)}.slg b{color:#e8eefc;font-weight:600}
 .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px;vertical-align:1px}.dh{background:#3b9eff}.db{background:#bfe0ff}
+
+.snote{margin:14px 0 0;font-size:14px;color:#c9d6e8;line-height:1.55}

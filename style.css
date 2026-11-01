@@ -55,3 +55,10 @@ input[type=file]{color:var(--mid)}input[type=file]::file-selector-button{backgro
 .cacp{color:var(--mid);font-size:12px;min-width:44px}
 .calink{color:var(--acc);font-size:12px;text-decoration:none}
 @media(max-width:560px){.caval{font-size:10.5px;padding:5px 7px}}
+
+.split{padding:18px;margin-top:14px}
+.sbar{display:flex;height:34px;border-radius:10px;overflow:hidden;font-size:13px;font-weight:600}
+.sh{background:linear-gradient(90deg,#1d5fd6,#3b9eff);display:flex;align-items:center;padding-left:14px;color:#fff}
+.sb{background:linear-gradient(90deg,#7fc1ff,#bfe0ff);display:flex;align-items:center;justify-content:center;color:#06204a}
+.slg{display:flex;gap:28px;flex-wrap:wrap;margin-top:14px;font-size:13px;color:var(--mid)}.slg b{color:#e8eefc;font-weight:600}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px;vertical-align:1px}.dh{background:#3b9eff}.db{background:#bfe0ff}

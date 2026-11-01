@@ -4,13 +4,16 @@ const LIVE=!!(CONFIG.PLATFORM_ID&&CONFIG.IPFS_ENDPOINT);
 document.querySelectorAll('[data-name]').forEach(e=>e.textContent=CONFIG.NAME);
 const $=s=>document.querySelector(s),app=$('#app'),esc=v=>String(v??'').replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
 const short=a=>a.slice(0,4)+'…'+a.slice(-4),fmt=n=>n>=1e6?(n/1e6).toFixed(2)+'M':n>=1e3?(n/1e3).toFixed(1)+'k':(+n).toFixed(2);
+let SOLUSD=0;const getSol=async()=>{for(const u of ['https://lite-api.jup.ag/price/v3?ids=So11111111111111111111111111111111111111112','https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd']){try{const j=await (await fetch(u)).json();const v=j.So11111111111111111111111111111111111111112?.usdPrice||j.solana?.usd;if(v>0){SOLUSD=+v;return}}catch{}}};await getSol();setInterval(getSol,60000);
+const usd=sol=>{if(!SOLUSD)return fmt(sol)+' SOL';const n=sol*SOLUSD;return '$'+(n>=1e9?(n/1e9).toFixed(2)+'B':n>=1e6?(n/1e6).toFixed(2)+'M':n>=1e3?(n/1e3).toFixed(1)+'K':n.toFixed(0))};
+
 $('#plat').textContent=CONFIG.PLATFORM_ID?'platform '+short(CONFIG.PLATFORM_ID):'platform not live yet';
 const wbtn=$('#wallet');wbtn.onclick=async()=>{if(L.pubkey()){await L.disconnect();wbtn.textContent='Connect wallet';return}
  if(!L.detected().includes('phantom')){wbtn.textContent='Phantom not found';setTimeout(()=>wbtn.textContent='Connect wallet',1800);return}
  try{wbtn.textContent=short(await L.connect('phantom'))}catch{}};
 let CACHE=null;async function coins(){if(!CONFIG.PLATFORM_ID)return [];if(CACHE&&Date.now()-CACHE.t<15000)return CACHE.v;const v=await L.listLaunches(CONFIG)||[];CACHE={t:Date.now(),v};return v}
 const SOL=c=>+c.raised/10**c.decB,pct=c=>Math.min(100,SOL(c)/(+c.target/10**c.decB)*100);
-const card=c=>`<a href="#/coin/${c.mintA}" class="card coin coinlink"><div class="img">${c.meta?.image?`<img src="${esc(c.meta.image)}" alt="">`:'?'}</div><div class="tk">$${esc(c.meta?.symbol||'?')}</div><div class="dim">${esc(c.meta?.name||short(c.mintA))}</div><div class="mc">${fmt(c.mcap)} SOL mcap</div><div class="dim mono" style="font-size:12px">${SOL(c).toFixed(2)} SOL raised · ${pct(c).toFixed(1)}% to graduation</div></a>`;
+const card=c=>`<a href="#/coin/${c.mintA}" class="card coin coinlink"><div class="img">${c.meta?.image?`<img src="${esc(c.meta.image)}" alt="">`:'?'}</div><div class="tk">$${esc(c.meta?.symbol||'?')}</div><div class="dim">${esc(c.meta?.name||short(c.mintA))}</div><div class="mc">${usd(c.mcap)} <span class="dim" style="font-weight:400">mcap</span></div><div class="dim mono" style="font-size:12px">${SOL(c).toFixed(2)} SOL raised · ${pct(c).toFixed(1)}% to graduation</div></a>`;
 const steps=`<div class="steps">
 <div class="card"><div class="n">01 · LAUNCH</div><b>Anyone launches a coin</b><p>Name, ticker, image, done. Every coin on ${CONFIG.NAME} has HODL rewards built in.</p></div>
 <div class="card"><div class="n">02 · HOLD</div><b>Your hold clock starts</b><p>Trading fees flow to that coin's holders, weighted by how long each one has held.</p></div>
@@ -34,7 +37,7 @@ async function coin(mint){app.innerHTML=`<div class="empty" style="margin-top:30
  const m=c.meta||{};app.innerHTML=`<div class="row" style="padding-top:24px"><div class="coin" style="padding:0;min-height:0"><div class="img" style="width:52px;height:52px">${m.image?`<img src="${esc(m.image)}" alt="">`:'?'}</div></div>
 <div><div class="mono" style="color:var(--acc)">$${esc(m.symbol)}</div><div style="font-size:22px;font-weight:600">${esc(m.name)}</div><div class="dim mono" style="font-size:12px">${esc(mint)}</div></div><div class="sp"></div>
 <a class="btn ghost" target="_blank" rel="noopener" href="https://raydium.io/launchpad/token/?mint=${mint}">Trade on Raydium</a></div>
-<div class="detail"><div><div class="card pad"><h3>Bonding curve</h3><div class="dim">${SOL(c).toFixed(3)} / ${(+c.target/10**c.decB).toFixed(0)} SOL raised · ${pct(c).toFixed(2)}% · mcap ${fmt(c.mcap)} SOL · ${c.status?'graduated':'on curve'}</div><p class="dim">${esc(m.description)}</p></div>
+<div class="detail"><div><div class="card pad"><h3>Bonding curve</h3><div class="dim">${SOL(c).toFixed(3)} / ${(+c.target/10**c.decB).toFixed(0)} SOL raised · ${pct(c).toFixed(2)}% · mcap ${usd(c.mcap)} · ${c.status?'graduated':'on curve'}</div><p class="dim">${esc(m.description)}</p></div>
 <div class="card pad" style="margin-top:16px"><h3>Holder leaderboard</h3><table id="hl"><tr><td><div class="empty" style="padding:20px">Loading holders…</div></td></tr></table><p class="note">Live balances from chain. Hold-time weights and accrued rewards come from the payout keeper once it's running.</p></div>
 <div class="card pad" style="margin-top:16px"><h3>Payout log</h3><div class="empty" style="padding:26px"><b>No payouts yet</b>Every fee distribution will be logged here with a transaction link.</div></div></div>
 <div><div class="card pad"><h3>Reward rules</h3><div class="note" style="margin:0">Each curve trade pays ${CONFIG.FEES.platform}% to the ${CONFIG.NAME} treasury, which is paid out to this coin's holders weighted by hold time.<br>Sell → clock resets.</div>

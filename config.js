@@ -7,5 +7,5 @@ LAUNCH:{supply:'1000000000000000',totalSellA:'793100000000000',slippageBps:100},
 TREASURY:'7Jbn6dvQiiapYZWDHFVHtqzG8cGzZdouspBfn3LHUnir', // platform admin + fee wallet + LP-NFT wallet
 PLATFORM_EXPECTED:'7dXpyeQamp472oy9rFjpR2D4BtSkgKwvDWi6cJM18wJW', // PDA from treasury
 PLATFORM_ID:'7dXpyeQamp472oy9rFjpR2D4BtSkgKwvDWi6cJM18wJW', // set to PLATFORM_EXPECTED once tools/create-platform.mjs --send has created it. Empty = launches disabled.
-IPFS_ENDPOINT:'', // upload service URL (upload/server.mjs, e.g. https://hodlfun-upload.onrender.com/). Empty = launches disabled.
+IPFS_ENDPOINT:'https://hodlfun-upload.onrender.com/', // upload service URL (upload/server.mjs, e.g. https://hodlfun-upload.onrender.com/). Empty = launches disabled.
 SIM_PAYER:'5tzFkiKscXHK5ZXCGbXZxdw7gTjjD1mBwuoFbhUvuAi9'};

@@ -46,3 +46,12 @@ input[type=file]{color:var(--mid)}input[type=file]::file-selector-button{backgro
 
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.stat{padding:16px}.k{font:600 10px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}.stat .v{font-size:24px;font-weight:600;margin-top:8px;letter-spacing:-.01em}.stat .s{color:var(--dim);font-size:12px;margin-top:4px}.stat .s a{color:var(--acc)}.duo{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.duo table,#an table{width:100%;margin-top:8px}
 @media(max-width:860px){.stats{grid-template-columns:1fr 1fr}.duo{grid-template-columns:1fr}.stat .v{font-size:19px}}
+
+.cabar{border-bottom:1px solid rgba(255,255,255,.06);background:linear-gradient(90deg,rgba(56,132,255,.10),rgba(56,132,255,.03))}
+.cain{display:flex;align-items:center;justify-content:center;gap:12px;padding:9px 0;font-size:13px;flex-wrap:wrap}
+.calab{color:var(--acc);font-weight:600;letter-spacing:.02em}
+.caval{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:#e8eefc;border-radius:8px;padding:5px 10px;cursor:pointer;font-size:12.5px}
+.caval:hover{border-color:var(--acc)}
+.cacp{color:var(--mid);font-size:12px;min-width:44px}
+.calink{color:var(--acc);font-size:12px;text-decoration:none}
+@media(max-width:560px){.caval{font-size:10.5px;padding:5px 7px}}
